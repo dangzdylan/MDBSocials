@@ -5,6 +5,8 @@ import FeedScreen from "./FeedScreen/FeedScreen.main";
 import DetailScreen from "./DetailScreen/DetailScreen.main";
 import NewSocialScreen from "../NewSocialScreen/NewSocialScreen.main";
 import { SocialModel } from "../../../models/social";
+import HomeScreen from "./HomeScreen/HomeScreen.main";
+import ConfirmationScreen from "../ConfirmationScreen/ConfirmationScreen.main";
 
 export type MainStackParamList = {
   HomeScreen: undefined;
@@ -17,6 +19,13 @@ export type MainStackParamList = {
 const MainStack = createStackNavigator<MainStackParamList>();
 
 export function MainStackScreen() {
+  const [homeScreenVisible, setHomeScreenVisible] = React.useState(false);
+
+  const toggleHomeScreen = () => {
+    setHomeScreenVisible(!homeScreenVisible);
+  }
+
+
   return (
     // TODO: Ensure that the initial route that the navigator goes to is the HomeScreen (which is a screen you have to implement!)
     // See docs on stack navigator, what can we add as a prop into MainStack.Navigator to make sure that the HomeScreen is the initial route?
@@ -24,7 +33,13 @@ export function MainStackScreen() {
 
     <MainStack.Navigator>
 
-      {/* Add your HomeScreen to the MainStack here! */}
+
+
+      <MainStack.Screen
+        name="HomeScreen"
+        options={{ headerShown: false }}
+        component={HomeScreen}
+      />
 
       <MainStack.Screen
         name="FeedScreen"
@@ -34,8 +49,7 @@ export function MainStackScreen() {
           headerLeft: () => (
             <Button
               title="Home"
-              onPress={/*TODO*/} // When we click the home button on top left, navigate to HomeScreen
-            />
+              onPress={() => navigation.navigate("HomeScreen")}/> // When we click the home button on top left, navigate to HomeScreen
           ),
           headerTitle: "All Socials",
         })
@@ -50,6 +64,11 @@ export function MainStackScreen() {
         name="NewSocialScreen"
         options={{ headerShown: false }}
         component={NewSocialScreen}
+      />
+      <MainStack.Screen
+        name="ConfirmationScreen"
+        options={{headerShown : false}}
+        component={ConfirmationScreen}
       />
     </MainStack.Navigator>
   );
